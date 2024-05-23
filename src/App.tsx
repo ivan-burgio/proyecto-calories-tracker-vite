@@ -1,10 +1,14 @@
-import { useReducer } from "react";
+import { useReducer, useEffect } from "react";
 import Form from "./components/Form";
 import { activityReducer, initialState } from "./reducers/activityReducer";
 import ActivityList from "./components/ActivityList";
 
 export default function App() {
     const [state, dispatch] = useReducer(activityReducer, initialState)
+
+    useEffect(() => {
+        localStorage.setItem('activities', JSON.stringify(state.activities));
+    }, [state.activities]);
 
     return (
         <>
@@ -20,6 +24,7 @@ export default function App() {
                 <div className="max-w-4xl mx-auto">
                     <Form
                         dispatch={dispatch}
+                        state={state}
                     />
                 </div>
             </section>
